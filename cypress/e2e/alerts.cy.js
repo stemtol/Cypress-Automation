@@ -10,7 +10,7 @@ describe ('alert',()=>{
 
     
     })
-    it.only ('confirmation alert',()=>{
+    it.skip ('confirmation alert',()=>{
         cy.visit('https://the-internet.herokuapp.com/javascript_alerts')
         cy.xpath("//button[normalize-space()='Click for JS Confirm']").click()
 
@@ -19,7 +19,24 @@ describe ('alert',()=>{
         })
         cy.on("window:confirm",()=> false) //closes alert with cancel rather than ok
 
-        cy.get("#result").should("have.test", "You clicked: Ok")
+        cy.get("#result").should("have.text", "You clicked: Cancel")
+
+    
+    })
+
+    it.only ('Prompt alert',()=>{
+        cy.visit('https://the-internet.herokuapp.com/javascript_alerts')
+
+        cy.window().then((p)=>{
+            cy.stub(p,"prompt").returns("temtol")
+
+        })
+
+        cy.get("button[onclick='jsPrompt()']").click()
+
+
+
+        cy.get("#result").should("have.text", "You entered: temtol")
 
     
     })
