@@ -17,14 +17,14 @@ describe ('alert',()=>{
         cy.on("window:confirm",(t)=>{
             expect(t).to.contain("I am")
         })
-        cy.on("window:confirm",()=> false) //closes alert with cancel rather than ok
+        cy.on("window:confirm",()=> false) //closes alert with cancel rather than ok, window:prompt to close prompts as well
 
         cy.get("#result").should("have.text", "You clicked: Cancel")
 
     
     })
 
-    it.only ('Prompt alert',()=>{
+    it.skip ('Prompt alert',()=>{
         cy.visit('https://the-internet.herokuapp.com/javascript_alerts')
 
         cy.window().then((p)=>{
@@ -37,8 +37,13 @@ describe ('alert',()=>{
 
 
         cy.get("#result").should("have.text", "You entered: temtol")
+    })
 
-    
+    it.only ('authenticated alert',()=>{
+        cy.visit('https://the-internet.herokuapp.com/basic_auth',{auth:{username:"admin",password:"admin"}}) //alternatively we have the below
+        // cy.visit("https://admin:admin@the-internet.herokuapp.com/basic_auth")
+
+
     })
 
 
