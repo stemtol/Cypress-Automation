@@ -1,5 +1,5 @@
 describe ('alert',()=>{
-    it.skip ('regular alert',()=>{
+    it ('regular alert',()=>{
         cy.visit('https://the-internet.herokuapp.com/javascript_alerts')
         cy.get("button[onclick='jsAlert()']").click()
 
@@ -10,21 +10,22 @@ describe ('alert',()=>{
 
     
     })
-    it.skip ('confirmation alert',()=>{
-        cy.visit('https://the-internet.herokuapp.com/javascript_alerts')
-        cy.xpath("//button[normalize-space()='Click for JS Confirm']").click()
+    it('confirmation alert',
+        () => {
+            cy.visit('https://the-internet.herokuapp.com/javascript_alerts')
+            cy.xpath("//button[normalize-space()='Click for JS Confirm']").click()
 
-        cy.on("window:confirm",(t)=>{
-            expect(t).to.contain("I am")
+            cy.on("window:confirm", (t) => {
+                expect(t).to.contain("I am")
+            })
+            cy.on("window:confirm", () => false) //closes alert with cancel rather than ok, window:prompt to close prompts as well
+
+            cy.get("#result").should("have.text", "You clicked: Cancel")
+
+
         })
-        cy.on("window:confirm",()=> false) //closes alert with cancel rather than ok, window:prompt to close prompts as well
 
-        cy.get("#result").should("have.text", "You clicked: Cancel")
-
-    
-    })
-
-    it.skip ('Prompt alert',()=>{
+    it ('Prompt alert',()=>{
         cy.visit('https://the-internet.herokuapp.com/javascript_alerts')
 
         cy.window().then((p)=>{
