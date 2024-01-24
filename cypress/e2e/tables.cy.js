@@ -48,13 +48,21 @@ describe('tables', () => {
           cy.get("ul[class='pagination']>li:nth-child(+p+)").click()
 
           cy.get("table[class=\"table table-bordered table-hover\"]>tbody>tr").
+<<<<<<< HEAD
               each(($row, index, $rows) =>{
+=======
+              each(($row, index, $rows =>{
+>>>>>>> origin/main
                 cy.wrap($row).within(() => {
                   cy.get("td:nth-child(3)").then((e) => {
                     cy.log(e.text()) //captures every email address from the table
                   })
                 })
+<<<<<<< HEAD
           })
+=======
+          }))
+>>>>>>> origin/main
         }
 
       cy.wait(3000)
