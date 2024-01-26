@@ -37,35 +37,33 @@ describe('tables', () => {
   it('pagination', () => {
     //find total number of pages
     cy.get(".col-sm-6.text-end").then((e) => {
-      let mytext = e.text() //captures Showing 1 to 10 of 17609 (1761 Pages)
-      let totalpages = mytext.substring(mytext.indexOf("(")+1, mytext.indexOf("Pages")-1)
-      cy.log("total number of pages currently is "+ totalpages)
+      let mytext = e.text(); // Captures Showing 1 to 10 of 17609 (1761 Pages)
+      let totalpages = mytext.substring(mytext.indexOf("(") + 1, mytext.indexOf("Pages") - 1);
+      cy.log("total number of pages currently is " + totalpages);
 
-      for (let p=1; p<=totalpages; p++)
-        if (totalpages>1)
-        {
-          cy.log("we are on page"+p)
-          cy.get("ul[class='pagination']>li:nth-child(+p+)").click()
+      for (let p = 1; p <= totalpages; p++) {
+        if (totalpages > 1) {
+          cy.log("we are on page" + p);
 
-          cy.get("table[class=\"table table-bordered table-hover\"]>tbody>tr").
-<<<<<<< HEAD
-              each(($row, index, $rows) =>{
-=======
-              each(($row, index, $rows =>{
->>>>>>> origin/main
-                cy.wrap($row).within(() => {
-                  cy.get("td:nth-child(3)").then((e) => {
-                    cy.log(e.text()) //captures every email address from the table
-                  })
-                })
-<<<<<<< HEAD
+          // Use backticks to interpolate the value of `p` in the selector
+          cy.get(`ul[class='pagination']>li:nth-child(${p})`).click();
+
+          // Use arrow function to capture `p` value correctly in the loop
+          cy.get("table[class='table table-bordered table-hover']>tbody>tr").each(($row, index, $rows) => {
+            cy.wrap($row).within(() => {
+              // Use `index` to target the specific column in the row
+              cy.get("td:nth-child(3)").then((e) => {
+                cy.log(e.text()); // Captures every email address from the table
+              })
+            })
           })
-=======
-          }))
->>>>>>> origin/main
         }
+      }
 
-      cy.wait(3000)
+      cy.wait(3000);
+    })
+
+
 
     })
 
@@ -73,7 +71,7 @@ describe('tables', () => {
 
   })
 
-})
+
 
 
 
