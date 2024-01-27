@@ -41,12 +41,14 @@ describe('tables', () => {
       let totalpages = mytext.substring(mytext.indexOf("(") + 1, mytext.indexOf("Pages") - 1);
       cy.log("total number of pages currently is " + totalpages);
 
-      for (let p = 1; p <= totalpages; p++) {
-        if (totalpages > 1) {
+      let total_pages = 13
+
+      for (let p = 1; p <= total_pages; p++) {
+        if (total_pages > 1) {
           cy.log("we are on page" + p);
 
           // Use backticks to interpolate the value of `p` in the selector
-          cy.get(`ul[class='pagination']>li:nth-child(${p})`).click();
+          cy.get("ul[class='pagination']>li:nth-child("+p+")").click()
 
           // Use arrow function to capture `p` value correctly in the loop
           cy.get("table[class='table table-bordered table-hover']>tbody>tr").each(($row, index, $rows) => {
